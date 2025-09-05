@@ -14,6 +14,7 @@ char server[] = "api.github.com";
 String owner = "Prithwis-2023";
 String repo = "BuildIn";
 String token= GH_TOKEN;
+int repoID = 1051497725;
 
 const int bluePin = 0;
 const int yellowPin = 7;
@@ -36,6 +37,8 @@ void setup()
   // attempt to connect to WiFi network
   while (wifiStatus != WL_CONNECTED)
   {
+    
+    Serial.println("Attempting...");
     wifiStatus = WiFi.begin(ssid, pass);  // connect to the network
     delay(10000);                     // wait 10 seconds for conection
   }
@@ -50,7 +53,7 @@ void loop()
 
 void getBuildStatus()
 {
-  String path = "/repos/" + owner + "/" + repo + "/actions/runs?per_page=1";
+  String path = "/repositories/"+ String(repoID) + "/actions/runs?per_page=1";
   client.beginRequest();
   client.get(path);
   client.sendHeader("User-Agent", "ArduinoMKR");
