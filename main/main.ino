@@ -10,15 +10,15 @@ char pass[] = PASSWORD;       // the network password
 int wifiStatus = WL_IDLE_STATUS;  // the WiFi radio's status
 
 /* GitHub API */
-char server[] = "api.github.com";
+char server[] = "img.shields.io";
 String owner = "Prithwis-2023";
 String repo = "BuildIn";
 String token= GH_TOKEN;
 int repoID = 1051497725;
 
-const int bluePin = 0;
+const int bluePin = 2;
 const int yellowPin = 7;
-const int redPin = 9;
+const int redPin = 5;
 const int greenPin = 6;
 
 WiFiSSLClient wifi;
@@ -48,38 +48,66 @@ void setup()
 void loop()
 {
   getBuildStatus();
-  delay(5000);
+  delay(10000);
 }
 
 void getBuildStatus()
 {
-  String path = "/repositories/"+ String(repoID) + "/actions/runs?per_page=1";
+  String path = "/github/actions/workflow/status/SUNSET-Sejong-University/BuildIn/main.yml";
   client.beginRequest();
   client.get(path);
   client.sendHeader("User-Agent", "ArduinoMKR");
   client.sendHeader("Authorization", "Bearer " + token);
+  //client.sendHeader("Accept", "application/vnd.github+json");
   client.endRequest();
 
   int statusCode = client.responseStatusCode();
   String response = client.responseBody();
 
-  if (statusCode == 200)
+  Serial.print("HTTP status: ");
+  Serial.println(statusCode);
+
+  if (statusCode != 200) 
   {
-    StaticJsonDocument<1024> doc;
-    deserializeJson(doc, response);
-
-    const char* status = doc["workflow_runs"][0]["status"];
-    const char* conclusion = doc["workflow_runs"][0]["conclusion"];
-
-    Serial.print("Status: "); Serial.println(status);
-    Serial.print("Conclusion: "); Serial.println(conclusion);
-
-    updateLED(status, conclusion);
+      Serial.println("Error: Bad HTTP response");
+      return;
   }
-  else
-  {
-    Serial.print("Error: "); Serial.println(statusCode);
+
+  response.toLowerCase();
+
+  if (response.indexOf("passing") >= 0) {
+      digitalWrite(greenPin, HIGH);
+      digitalWrite(redPin, LOW);
+      digitalWrite(yellowPin, LOW);
+  } 
+  else if (response.indexOf("failing") >= 0) {
+      digitalWrite(redPin, HIGH);
+      digitalWrite(greenPin, LOW);
+      digitalWrite(yellowPin, LOW);
+  } 
+  else {
+      digitalWrite(yellowPin, HIGH); // unknown/error
+      digitalWrite(redPin, LOW);
+      digitalWrite(greenPin, LOW);
   }
+
+  // StaticJsonDocument<4096> doc;  
+  // if (deserializeJson(doc, response) != DeserializationError::Ok) 
+  // {
+  //     Serial.println("JSON parse failed!");
+  //     return;
+  // }
+
+  // const char* runStatus = doc["workflow_runs"][0]["status"];
+  // const char* conclusion = doc["workflow_runs"][0]["conclusion"];
+  
+  // Serial.print("Status: ");
+  // Serial.println(runStatus ? runStatus : "null");
+
+  // Serial.print("Conclusion: ");
+  // Serial.println(conclusion ? conclusion : "null");
+
+  // updateLED(runStatus, conclusion);
 }
 
 void updateLED (const char* status, const char* conclusion)
