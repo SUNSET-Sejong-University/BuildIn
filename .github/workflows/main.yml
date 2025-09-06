@@ -17,4 +17,4 @@ jobs:
         run: |
           echo "Hello from GitHub Actions!"
           # Uncomment this line to force a failure:
-           exit 1
+          # exit 1
