@@ -114,7 +114,7 @@ String getValue(String &json, const char *key)
   int keyIndex = json.indexOf(String("\"") + key + "\":");
   if (keyIndex == -1) return "";
   
-  int start = json.indexOf("\"", keyIndex + strlen(key) + 3); // start of value
+  int start = json.indexOf("\"", keyIndex + strlen(key) + 3); // start of value. the 3 is because of the two double quotes and the colon
   int end = json.indexOf("\"", start + 1);
   if (start == -1 || end == -1) return "";
 
