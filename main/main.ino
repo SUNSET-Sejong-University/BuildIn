@@ -10,11 +10,10 @@ char pass[] = PASSWORD;       // the network password
 int wifiStatus = WL_IDLE_STATUS;  // the WiFi radio's status
 
 /* GitHub API */
-char server[] = "img.shields.io";
+char server[] = "api.github.com";
 String owner = "Prithwis-2023";
 String repo = "BuildIn";
 String token= GH_TOKEN;
-int repoID = 1051497725;
 
 const int bluePin = 2;
 const int yellowPin = 7;
@@ -48,21 +47,22 @@ void setup()
 void loop()
 {
   getBuildStatus();
-  delay(10000);
+  delay(2000);
 }
 
 void getBuildStatus()
 {
-  String path = "/github/actions/workflow/status/SUNSET-Sejong-University/BuildIn/main.yml";
+  String path = "/repositories/1051497725/actions/runs?per_page=1";
   client.beginRequest();
   client.get(path);
   client.sendHeader("User-Agent", "ArduinoMKR");
   client.sendHeader("Authorization", "Bearer " + token);
-  //client.sendHeader("Accept", "application/vnd.github+json");
+  client.sendHeader("Accept", "application/vnd.github+json");
   client.endRequest();
 
   int statusCode = client.responseStatusCode();
   String response = client.responseBody();
+  response.toLowerCase();
 
   Serial.print("HTTP status: ");
   Serial.println(statusCode);
@@ -70,67 +70,53 @@ void getBuildStatus()
   if (statusCode != 200) 
   {
       Serial.println("Error: Bad HTTP response");
+      client.stop();
       return;
   }
 
-  response.toLowerCase();
+  String runStatus = getValue(response, "status");
+  String conclusion = getValue(response, "conclusion");
 
-  if (response.indexOf("passing") >= 0) {
-      digitalWrite(greenPin, HIGH);
-      digitalWrite(redPin, LOW);
-      digitalWrite(yellowPin, LOW);
-  } 
-  else if (response.indexOf("failing") >= 0) {
-      digitalWrite(redPin, HIGH);
-      digitalWrite(greenPin, LOW);
-      digitalWrite(yellowPin, LOW);
-  } 
-  else {
-      digitalWrite(yellowPin, HIGH); // unknown/error
-      digitalWrite(redPin, LOW);
-      digitalWrite(greenPin, LOW);
-  }
-
-  // StaticJsonDocument<4096> doc;  
-  // if (deserializeJson(doc, response) != DeserializationError::Ok) 
-  // {
-  //     Serial.println("JSON parse failed!");
-  //     return;
-  // }
-
-  // const char* runStatus = doc["workflow_runs"][0]["status"];
-  // const char* conclusion = doc["workflow_runs"][0]["conclusion"];
+  Serial.print("Status: "); Serial.println(runStatus);
+  Serial.print("Conclusion: "); Serial.println(conclusion);
   
-  // Serial.print("Status: ");
-  // Serial.println(runStatus ? runStatus : "null");
-
-  // Serial.print("Conclusion: ");
-  // Serial.println(conclusion ? conclusion : "null");
-
-  // updateLED(runStatus, conclusion);
+  updateLED(runStatus, conclusion);
+  client.stop();
 }
 
-void updateLED (const char* status, const char* conclusion)
+void updateLED(String status, String conclusion)
 {
   digitalWrite(bluePin, LOW);
   digitalWrite(yellowPin, LOW);
   digitalWrite(redPin, LOW);
   digitalWrite(greenPin, LOW);
 
-  if (strcmp(status, "queued") == 0)
+  if (status == "queued")
   {
     digitalWrite(bluePin, HIGH);
   }
-  else if (strcmp(status, "in_progress") == 0)
+  else if (status == "in_progress")
   {
     digitalWrite(yellowPin, HIGH);
   }
-  else if (strcmp(status, "completed") == 0 && strcmp(conclusion, "success") == 0)
+  else if ((status == "completed") && (conclusion == "success"))
   {
     digitalWrite(greenPin, HIGH);
   }
-  else if (strcmp(status, "completed") == 0 && strcmp(conclusion, "failure") == 0)
+  else if ((status == "completed") && (conclusion == "failure"))
   {
     digitalWrite(redPin, HIGH);
   }
+}
+
+String getValue(String &json, const char *key)
+{
+  int keyIndex = json.indexOf(String("\"") + key + "\":");
+  if (keyIndex == -1) return "";
+  
+  int start = json.indexOf("\"", keyIndex + strlen(key) + 3); // start of value
+  int end = json.indexOf("\"", start + 1);
+  if (start == -1 || end == -1) return "";
+
+  return json.substring(start + 1, end);
 }
