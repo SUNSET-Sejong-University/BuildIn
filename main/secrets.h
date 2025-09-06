@@ -1,2 +1,2 @@
-#define SSID "network"
-#define PASSWORD "password"
+#define SSID "DLive5G_CEA8"
+#define PASSWORD "BD0982CEA7"
