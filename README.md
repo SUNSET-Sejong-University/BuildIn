@@ -43,8 +43,6 @@ This project requires the following hardware components:
 - **Arduino MKR WiFi 1010**  
 - **4 LEDs** (Red, Yellow, Green, plus optional Blue for standby/other state)  
 - **Breadboard and jumper wires**
-- 
-⚡ Note: This project does not require external resistors. The LEDs are driven using the `INPUT_PULLUP` configuration on the MKR WiFi 1010 pins.
 
 ## Motivation
 
