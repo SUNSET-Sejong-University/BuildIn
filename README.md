@@ -21,7 +21,6 @@
   - [Configuration](#configuration)  
   - [Running / Viewing](#running--viewing)  
 - [Contributing](#contributing)  
-- [License](#license)  
 
 ---
 
@@ -78,9 +77,28 @@ Clone the repository
     - Red LED → GPIO Pin 5 (Build failed / error)
     - Yellow LED → GPIO Pin 7 (Build in progress / unknown)
     - Green LED → GPIO Pin 6 (Build success / passing)
-    - Blue LED → GPIO Pin 2 (Standby / optional state)
+    - Blue LED → GPIO Pin 2 (Build queued)
 
 
 ### Running / Viewing
 
 Upload the sketch to the Arduino and Compile/Run.
+
+## Contributing
+We welcome contributions from everyone! Here’s how you can help:
+- Report bugs or issues via GitHub Issues.
+- Propose improvements, e.g., adding support for more CI systems, extra LED patterns, or enhanced functionality.
+- Improve documentation.
+
+Submit pull requests with your enhancements or fixes.
+
+### Contribution Process
+1. Fork the repository.
+2. Create a new feature branch.
+```bash
+git checkout -b my-feature
+```
+3. Make your changes and commit them with descriptive messages
+```bash
+git commit -m "Add new feature XYZ"
+```
