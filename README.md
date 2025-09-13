@@ -85,4 +85,4 @@ Clone the repository
 
 ### Running / Viewing
 
-Upload the sketch to the Arduino and Run.
+Upload the sketch to the Arduino and Compile/Run.
