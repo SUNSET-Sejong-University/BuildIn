@@ -77,10 +77,10 @@ Clone the repository
     ```
 2. Configure the LED pin assignments inside the Arduino sketch.
    - By default, the following GPIO pins are used:
-    - Red LED → GPIO Pin 2 (Build failed / error)
-    - Yellow LED → GPIO Pin 3 (Build in progress / unknown)
-    - Green LED → GPIO Pin 4 (Build success / passing)
-    - Blue LED → GPIO Pin 5 (Standby / optional state)
+    - Red LED → GPIO Pin 5 (Build failed / error)
+    - Yellow LED → GPIO Pin 7 (Build in progress / unknown)
+    - Green LED → GPIO Pin 6 (Build success / passing)
+    - Blue LED → GPIO Pin 2 (Standby / optional state)
 
 
 ### Running / Viewing
