@@ -71,7 +71,7 @@ Clone the repository
    // secrets.h (example)
    #define SECRET_SSID     "YourNetworkName"
    #define SECRET_PASS     "YourNetworkPassword"
-   #define GITHUB_TOKEN    "your_personal_access_token"
+   #define GH_TOKEN    "your_personal_access_token"
     ```
 2. Configure the LED pin assignments inside the Arduino sketch.
    - By default, the following GPIO pins are used:
