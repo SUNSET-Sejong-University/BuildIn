@@ -46,7 +46,7 @@ void setup()
 void loop()
 {
   getBuildStatus();
-  delay(2000);
+  delay(1000);
 }
 
 void getBuildStatus()
