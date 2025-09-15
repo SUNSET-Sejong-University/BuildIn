@@ -21,11 +21,11 @@ jobs:
       - name: Simulate long-running job
         run: |
           echo "Job is in progress..."
-          sleep 60   # 1 minute to hold 'in_progress'
+          sleep 20   # 1 minute to hold 'in_progress'
           echo "Done with in-progress simulation"
 
       - name: Final step
         run: |
           echo "Job finished successfully!"
           # Uncomment to simulate failure:
-          # exit 1
+           exit 1
