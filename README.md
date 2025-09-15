@@ -27,7 +27,9 @@
 ## About
 
 BuildIn is a simple tool that displays the build status of a repository using a traffic-semaphore style indicator (e.g. red, yellow, green). It is designed to make build status easy to glance at in dashboards or embedded views.
-
+<p align="center">
+  <img src="docs/BuildIn.png" alt="BuildIn Image" width="500"/>
+</p>
 
 ## Features
 
