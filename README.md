@@ -15,7 +15,6 @@
 - [About](#about)  
 - [Features](#features)
 - [Hardware](#hardware)
-- [Motivation](#motivation)  
 - [Usage](#usage)  
   - [Installation](#installation)  
   - [Configuration](#configuration)  
@@ -44,11 +43,6 @@ This project requires the following hardware components:
 - **Arduino MKR WiFi 1010**  
 - **4 LEDs** (Red, Yellow, Green, plus optional Blue for standby/other state)  
 - **Breadboard and jumper wires**
-
-## Motivation
-
-When managing multiple repositories or monitoring many CI pipelines, it can be tedious to check each status individually. BuildIn provides an intuitive, visual summary of build health using a traffic-semaphore style indicator, allowing quicker assessment at a glance.
-
 
 ## Usage
 
