@@ -13,8 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run a simple script
+      - name: Simulate queued wait
         run: |
-          echo "Hello from GitHub Actions!"
-          # Uncomment this line to force a failure:
+          echo "Delaying to simulate queued..."
+          sleep 20   # 20 seconds, so your board sees 'queued'
+
+      - name: Simulate long-running job
+        run: |
+          echo "Job is in progress..."
+          sleep 60   # 1 minute to hold 'in_progress'
+          echo "Done with in-progress simulation"
+
+      - name: Final step
+        run: |
+          echo "Job finished successfully!"
+          # Uncomment to simulate failure:
           # exit 1
