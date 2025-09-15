@@ -16,12 +16,12 @@ jobs:
       - name: Simulate queued wait
         run: |
           echo "Delaying to simulate queued..."
-          sleep 20   # 20 seconds, so your board sees 'queued'
+          sleep 20   # 20 seconds, so board sees 'queued'
 
       - name: Simulate long-running job
         run: |
           echo "Job is in progress..."
-          sleep 20   # 1 minute to hold 'in_progress'
+          sleep 20   # 20 seconds, to hold 'in_progress'
           echo "Done with in-progress simulation"
 
       - name: Final step
