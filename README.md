@@ -98,3 +98,9 @@ git checkout -b my-feature
 ```bash
 git commit -m "Add new feature XYZ"
 ```
+---
+
+## 📜 Credits
+Developed by Prithwis Das
+
+---
