@@ -101,6 +101,6 @@ git commit -m "Add new feature XYZ"
 ---
 
 ## 📜 Credits
-Developed by Prithwis Das
+Developed by Prithwis Das and Choi Jong Woo
 
 ---
